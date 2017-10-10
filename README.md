@@ -1,8 +1,24 @@
+#Коментарі відносно плану, інфраструктури та кроків
+В даному дослідницькому проекті використовується базовий темплейт аплікації з AWS Lab, який дозволяє створити аплікацію по догляду за тваринами, та мінімальнрий функціонал.
+
+Під час цього завдання має пройтись шлях налаштування інфраструктурних та коллаборативних задач, налаштування React та визначення специфіки.
+Після реалізації аплікації до логіну мають додатися кнопки авторизації через соціальні мережі та потім переписавшись, має бути створений з нуля інший ап.
+
+1. Налагодити інфрастурктуру і аккаунти
+2. Розібратись з гілками та гітом, правами доступу на AWS
+3. Запустити аплікацію по туторіалу
+4. Масштабувати її на Андроід, iOS, Web
+5. Додати до логіну соціальні кнопки та залишити звичайні
+
+Переписати потім іншу аплікацію з нуля.
+
+Почнемо!
+
 # AWS Mobile React Native Starter App - Serverless Pet Tracker
 
 Bootstrap a React Native application on AWS. This starter automatically provisions a Serverless infrastructure with authentication, authorization, image storage, API access and database operations. It also includes user registration and MFA support. The sample use case is a "Pet Tracker" where after a user registers and logs in they can upload pictures of their pet to the system along with information like the birthday or breed.
 
-A companion blog post for this repository can be found in the AWS Mobile Blog: [Announcing: React Native Starter Project with One-Click AWS Deployment and Serverless Infrastructure](https://aws.amazon.com/blogs/mobile/announcing-react-native-starter-project-with-one-click-aws-deployment-and-serverless-infrastructure/). 
+A companion blog post for this repository can be found in the AWS Mobile Blog: [Announcing: React Native Starter Project with One-Click AWS Deployment and Serverless Infrastructure](https://aws.amazon.com/blogs/mobile/announcing-react-native-starter-project-with-one-click-aws-deployment-and-serverless-infrastructure/).
 
 ### Quicklinks
  - [Getting started](#getstarted)
@@ -26,7 +42,7 @@ AWS Services used:
 ## Prerequisites
 - AWS Account
 - [Xcode](https://developer.apple.com/xcode/) / [Android Studio](https://developer.android.com/studio/index.html)
-- [Node.js](https://nodejs.org/) with NPM 
+- [Node.js](https://nodejs.org/) with NPM
   - `npm install -g react-native-cli`
   - `npm install -g create-react-native-app`
 - (_Optional_) [Watchman](https://facebook.github.io/watchman/)
@@ -507,7 +523,7 @@ cd ./aws-mobile-react-native-starter/client
 npm run ios # or android
 ```
 
-If you have previously uploaded any pets click on their thumbnail from the main page (if not upload one now). You should see a new button **DELETE PET**. Click on it and the pet should be removed from the screen. The record should also have been removed from the DynamoDB table. You can validate this by going to the **Resources** section of your Mobile Hub project and opening up the DynamoDB table. 
+If you have previously uploaded any pets click on their thumbnail from the main page (if not upload one now). You should see a new button **DELETE PET**. Click on it and the pet should be removed from the screen. The record should also have been removed from the DynamoDB table. You can validate this by going to the **Resources** section of your Mobile Hub project and opening up the DynamoDB table.
 
 ## Security Information
 
