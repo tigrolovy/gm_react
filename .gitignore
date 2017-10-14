@@ -1,16 +1,10 @@
-# OSX
-#
+# Don't check auto-generated stuff into git
+coverage
+build
+node_modules
+stats.json
+
+# Cruft
 .DS_Store
 npm-debug.log
-npm-debug.log*
-coverage
-.nyc_output
-yarn.lock
-node_modules
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-testgrounds
-generated
+.idea
