@@ -1,540 +1,220 @@
-#Коментарі відносно плану, інфраструктури та кроків
-В даному дослідницькому проекті використовується базовий темплейт аплікації з AWS Lab, який дозволяє створити аплікацію по догляду за тваринами, та мінімальнрий функціонал.
+This project was bootstrapped with [Create React Native App](https://github.com/react-community/create-react-native-app).
 
-Під час цього завдання має пройтись шлях налаштування інфраструктурних та коллаборативних задач, налаштування React та визначення специфіки.
-Після реалізації аплікації до логіну мають додатися кнопки авторизації через соціальні мережі та потім переписавшись, має бути створений з нуля інший ап.
+Below you'll find information about performing common tasks. The most recent version of this guide is available [here](https://github.com/react-community/create-react-native-app/blob/master/react-native-scripts/template/README.md).
 
-1. Налагодити інфрастурктуру і аккаунти
-2. Розібратись з гілками та гітом, правами доступу на AWS
-3. Запустити аплікацію по туторіалу
-4. Масштабувати її на Андроід, iOS, Web
-5. Додати до логіну соціальні кнопки та залишити звичайні
+## Table of Contents
 
-Переписати потім іншу аплікацію з нуля.
+* [Updating to New Releases](#updating-to-new-releases)
+* [Available Scripts](#available-scripts)
+  * [npm start](#npm-start)
+  * [npm test](#npm-test)
+  * [npm run ios](#npm-run-ios)
+  * [npm run android](#npm-run-android)
+  * [npm run eject](#npm-run-eject)
+* [Writing and Running Tests](#writing-and-running-tests)
+* [Environment Variables](#environment-variables)
+  * [Configuring Packager IP Address](#configuring-packager-ip-address)
+* [Adding Flow](#adding-flow)
+* [Customizing App Display Name and Icon](#customizing-app-display-name-and-icon)
+* [Sharing and Deployment](#sharing-and-deployment)
+  * [Publishing to Expo's React Native Community](#publishing-to-expos-react-native-community)
+  * [Building an Expo "standalone" app](#building-an-expo-standalone-app)
+  * [Ejecting from Create React Native App](#ejecting-from-create-react-native-app)
+    * [Build Dependencies (Xcode & Android Studio)](#build-dependencies-xcode-android-studio)
+    * [Should I Use ExpoKit?](#should-i-use-expokit)
+* [Troubleshooting](#troubleshooting)
+  * [Networking](#networking)
+  * [iOS Simulator won't open](#ios-simulator-wont-open)
+  * [QR Code does not scan](#qr-code-does-not-scan)
 
-Почнемо!
+## Updating to New Releases
 
-# AWS Mobile React Native Starter App - Serverless Pet Tracker
+You should only need to update the global installation of `create-react-native-app` very rarely, ideally never.
 
-Bootstrap a React Native application on AWS. This starter automatically provisions a Serverless infrastructure with authentication, authorization, image storage, API access and database operations. It also includes user registration and MFA support. The sample use case is a "Pet Tracker" where after a user registers and logs in they can upload pictures of their pet to the system along with information like the birthday or breed.
+Updating the `react-native-scripts` dependency of your app should be as simple as bumping the version number in `package.json` and reinstalling your project's dependencies.
 
-A companion blog post for this repository can be found in the AWS Mobile Blog: [Announcing: React Native Starter Project with One-Click AWS Deployment and Serverless Infrastructure](https://aws.amazon.com/blogs/mobile/announcing-react-native-starter-project-with-one-click-aws-deployment-and-serverless-infrastructure/).
+Upgrading to a new version of React Native requires updating the `react-native`, `react`, and `expo` package versions, and setting the correct `sdkVersion` in `app.json`. See the [versioning guide](https://github.com/react-community/create-react-native-app/blob/master/VERSIONS.md) for up-to-date information about package version compatibility.
 
-### Quicklinks
- - [Getting started](#getstarted)
- - [Using Registration and Login components in your app](#advanced-auth)
- - [Accessing Cloud APIs with REST](#restclient)
- - [Storing images, video and other content in the cloud](#storage)
- - [Modifying Cloud Logic with Lambda for your app](#lambdamodify)
+## Available Scripts
 
-## Architecture Overview
-![Architecture](media/architecture.png)
+If Yarn was installed when the project was initialized, then dependencies will have been installed via Yarn, and you should probably use it to run these commands as well. Unlike dependency installation, command running syntax is identical for Yarn and NPM at the time of this writing.
 
-AWS Services used:
-* Amazon Cognito User Pools
-* Amazon Cognito Federated Identities
-* Amazon API Gateway
-* AWS Lambda
-* Amazon DynamoDB
-* Amazon S3
-* AWS Mobile Hub
+### `npm start`
 
-## Prerequisites
-- AWS Account
-- [Xcode](https://developer.apple.com/xcode/) / [Android Studio](https://developer.android.com/studio/index.html)
-- [Node.js](https://nodejs.org/) with NPM
-  - `npm install -g react-native-cli`
-  - `npm install -g create-react-native-app`
-- (_Optional_) [Watchman](https://facebook.github.io/watchman/)
-  - On macOS, it is recommended to install it using [Homebrew](https://brew.sh/)
-    - `brew install watchman`
-- (_Optional_) [AWS CLI](https://aws.amazon.com/cli/)  
+Runs your app in development mode.
 
-## Getting Started <a name="getstarted"></a>
+Open it in the [Expo app](https://expo.io) on your phone to view it. It will reload if you save edits to your files, and you will see build errors and logs in the terminal.
 
-First clone this repo: `git clone https://github.com/awslabs/aws-mobile-react-native-starter`
-
-## Backend Setup
-1. Set up your AWS resources using AWS Mobile Hub by clicking the button below:
-
-<p align="center">
-  <a target="_blank" href="https://console.aws.amazon.com/mobilehub/home?#/?config=https://github.com/awslabs/aws-mobile-react-native-starter/blob/master/backend/import_mobilehub/reactnative-starter.zip">
-    <span>
-        <img height="100%" src="https://s3.amazonaws.com/deploytomh/button-deploy-aws-mh.png"/>
-    </span>
-  </a>
-</p>
-
-2. Press **Import project**
-
-## Client Setup
-
-![Alt Text](media/console.gif)
-
-1. Before proceeding further, in the Mobile Hub console click the **Cloud Logic** tile and ensure that the API deployment status at the bottom shows **CREATE_COMPLETE** (_this can take a few moments_).
-
-2. Click **Configure** on the left hand bar of the console and select the **Hosting and Streaming tile**.
-
-
-3. At the bottom of the page click **Download aws-exports.js file**. Copy this file into the `./aws-mobile-react-native-starter/client` folder of the repo you cloned.
-
-   * _Alternatively using the AWS CLI_:
-
-     ```
-     $ cd ../aws-mobile-react-native-starter/client
-     $ aws s3api list-buckets --query 'Buckets[?starts_with(Name,`reactnativestarter-hosting`)].Name' |grep reactnativestarter |tr -d '"'
-     $ aws s3api get-object --bucket <YOUR_BUCKET_NAME> --key aws-exports.js ./aws-exports.js
-     ```
-
-5. Navigate into  `./aws-mobile-react-native-starter/client`  and run:
-
-   ```
-   $ npm install
-   $ npm run ios #npm run android
-   ```
-
- Done!
-
-## Application walkthrough
-
-1. On a phone or emulator/simulator, open the application
-2. Select the **SIGN UP** tab in the lower right to register a new user. You will be prompted to enter a valid email and phone number to confirm your registration.
-3. Click **Sign Up** and you will recieve a code via SMS. Enter this into the prompt and press **OK**.
-3. From the **Sign In** tab of the application enter the _Username_ and _Password_ of the user you just registered and select **SIGN IN**.
-4. A code will be sent via SMS. Enter that code in the prompt and press **OK**.
-
-5. Press the plus (+) button to upload a photo. After selecting a photo select the **Check mark**.
-6. Fill out a few details like the name, birthday, breed and gender of your pet. Press **Add Pet** to upload the photo. This will first transfer the photo to an S3 bucket which only the logged-in user has access to, it will then write the record to a DynamoDB table (via API Gateway and Lambda) that is also restricted on a per-user basis.
-
-![Add Pet](media/Nadia1.png)
-
-6. You will see a record of your pet on the homescreen.
-
-![My Pets](media/Nadia2.png)
-
-## Use features in your app.
-
-This starter app includes a set of libraries (under `client/lib`) to help you integrate features into your own React Native app. These libraries include helpers, React [Higher Order Components](https://facebook.github.io/react/docs/higher-order-components.html) that you can use to easily add capabilities for Sign-Up, Sign-In or API Access with basic reusable React Components through `Auth`, `API` and `Storage` HOCs.
-
-You will need [Create React Native App](https://github.com/react-community/create-react-native-app) for the next sections.
-
-- Create a new React Native App (CRNA) using `create-react-native-app`
-- `cd` into your new app dir.
-- Eject your react native app (in our examples call it "myapp")
-```sh
-create-react-native-app <project-directory>
-cd <project-directory>
-npm run eject # Eject as "React Native"
-```
-- Download the `aws-exports.js` file from your AWS MobileHub project as outlined earlier in the [Getting started](#getstarted) section. Place it in the root of your new CRNA directory.
-
-- Copy `lib` folder from this starter app  
-`cp -rf ../<some-directory>/aws-react-native-native-starter/client/lib .`
-
-### Sign-up and Sign-In <a name="advanced-auth"></a>
-
-1. Install dependencies with `npm install`
-
-2. Install additional dependencies:
-
-```npm install aws-sdk react-native-aws-cognito-js react-native-prompt --save```
-
-3. Link the native components by running: `react-native link`
-
-4. Open the `App.js` file.
-
-5. Import the `WithAuth` HOC from the library
-```javascript
-import { WithAuth } from './lib/Categories/Auth/Components';
-```
-
-This HOC will add a prop called `session` to your component as well as a method called `doSignOut()`. There is also a wrapper class called `Auth` as part of this which is a helper for common Sign-Up and Sign-In activities. We'll show you how to use the `session` and `doSignOut()` capabilities next.
-
-6. Edit your App component to transform it into one that suports `Auth`  
-```javascript
-export default WithAuth(class App extends React.Component {
-  // ...
-});
-```
-
-7. Import the React Native Button component
-```javascript
-import { StyleSheet, Text, View, Button } from 'react-native';
-```
-
-8. Import the SignIn/SignUp example component
-```javascript
-import { SignIn, SignUp } from './lib/Categories/Auth/Components/Examples';
-```
-
-9. Change your `render()` method to check if a user is signed in or out, and show SignIn/SignUp components or a SignOut button accordingly.
-```jsx
-render() {
-  const { session } = this.props;
-
-  return (
-    session ?
-      (<View style={styles.container}>
-        <Button title="Sign Out" onPress={() => this.props.doSignOut()} />
-      </View>)
-      :
-      (<View style={styles.container}>
-        <SignIn {...this.props} />
-        <SignUp {...this.props} />
-      </View>)
-  );
-}
-```
-
-10. Test it!  
-`npm run ios # or android`
-
-11. You now have SignIn/SignUp/SignOut capabilities (With MFA support too!)
-
-### Cloud APIs and Backend Access Control<a name="restclient"></a>
-In order to access resources in your AWS account that are protected via AWS [Identity and Access Management](http://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html) you will need to sign your requests using the [AWS Signature Version 4](http://docs.aws.amazon.com/general/latest/gr/signature-version-4.html) signing process. The starter application supports signing requests both for uploading your images to Amazon S3, as well as communicating with the backend (AWS Lambda and DynamoDB) via Amazon API Gateway. There are many different ways that [IAM Permissions can be configured to Control Access to API Gateway](http://docs.aws.amazon.com/apigateway/latest/developerguide/permissions.html) using credentials which we encourage you to read more about.
-
-The starter application retrieves AWS credentials using the `WithAuth` HOC from the previous section via Amazon Cognito. This section outlines using an `API` feature which automatically uses these credentials to sign requests to Amazon API Gateway which are secured using IAM.
-
-The following steps require the `WithAuth` section to be completed first. Please follow steps 1-9 from the earlier [Sign-Up and Sign-In](#advanced-auth) section.
-
-1. Install additional dependencies  
-`npm install aws4-react-native axios --save`
-
-2. Import the `aws-exports.js` file
-```javascript
-import awsmobile from './aws-exports';
-```
-
-3. Import the `WithAuth` HOC from the library
-```javascript
-import { WithAPI } from './lib/Categories/API/Components';
-```
-
-4. Edit your App component to transform it into one that suports `API`  
-```javascript
-export default WithAPI(WithAuth(class App extends React.Component {
-  // ...
-}));
-```
-
-5. Add `apiResponse` to the component's initial state  
-```javascript
-export default WithAPI(WithAuth(class App extends React.Component {
-
-  state = {
-    apiResponse: null,
-  }
-
-  // ...
-}));
-```
-
-6. Add a handler method to your component to call your API
-```javascript
-export default WithAPI(WithAuth(class App extends React.Component {
-  // ...
-
-  async handleCallAPI() {
-    const { api } = this.props;
-
-    // Get endpoint
-    const cloudLogicArray = JSON.parse(awsmobile.aws_cloud_logic_custom);
-    const endPoint = cloudLogicArray[0].endpoint;
-
-    const requestParams = {
-      method: 'GET',
-      url: endPoint + '/items/pets',
-    };
-
-    let apiResponse = null;
-
-    try {
-      apiResponse = await api.restRequest(requestParams);
-    } catch (err) {
-      console.warn(err);
-    }
-
-    this.setState({ apiResponse });
-  }
-
-  // ...
-}));
-```
-
-7. Change your `render()` method to show a button to invoke your API
-```jsx
-render() {
-  const { session } = this.props;
-
-  return (
-    session ?
-      (<View style={styles.container}>
-        <Button title="Call API" onPress={this.handleCallAPI.bind(this)} />
-        <Text>Response: {this.state.apiResponse && JSON.stringify(this.state.apiResponse)}</Text>
-        <Button title="Sign Out" onPress={() => this.props.doSignOut()} />
-      </View>)
-      :
-      (<View style={styles.container}>
-        <SignIn {...this.props} />
-        <SignUp {...this.props} />
-      </View>)
-  );
-}
-```
-
-8. Test it!  
-`npm run ios # or android`
-
-9. You can now invoke API Gateway APIs from your React Native that are protected via AWS IAM. After you login to the application press the **Call API** button to see the JSON response returned from the network request.
-
-### Storing content in the cloud <a name="storage"></a>
-Many applications today provide rich media such as images or videos. Sometimes these are also private to users. This starter project provides a `Storage` component that allows a user to upload data, such as an image, to an Amazon S3 bucket in a folder which is protected so that only that user can access the data. This is done by setting S3 bucket policies on unique user Identities provided by Amazon Cognito. You can read more about this [here](http://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_examples_s3_cognito-bucket.html).
-
-The `Storage` feature depends on the user to have valid credentials. The following steps require the `WithAuth` section to be completed first. Please follow steps 1-9 from the earlier [Sign-Up and Sign-In](#advanced-auth) section.
-
-
-1. First, install additional dependencies  
-`npm install react-native-fetch-blob buffer --save`
-
-3. Next link the native bridge components
-   - `react-native-fetch-blob` is a library to help you with data transfer on React Native. Run the following command in your terminal:
-```sh
-RNFB_ANDROID_PERMISSIONS=true react-native link
-```
-
-4. Import the `aws-exports.js` file if you haven't already
-```javascript
-import awsmobile from './aws-exports';
-```
-
-5. Import dependencies (use `App.js` from the CRNA process):
-```javascript
-import AWS from 'aws-sdk';
-import RNFetchBlob from 'react-native-fetch-blob';
-import { Buffer } from 'buffer';
-```
-
-6. Import the `WithStorage` HOC from the library
-```javascript
-import { WithStorage } from './lib/Categories/Storage/Components';
-```
-
-7. Import the React Native Image component
-```javascript
-import { StyleSheet, Text, View, Button, Image } from 'react-native';
-```
-
-8. Edit your App component to transform it into one that suports `Storage`  
-```javascript
-export default WithStorage(WithAuth(class App extends React.Component {
-  // ...
-}));
-```
-
-9. Add `objectUrl` to the component's initial state  
-```javascript
-export default WithStorage(WithAuth(class App extends React.Component {
-
-  state = {
-    objectUrl: null,
-  }
-
-  // ...
-}));
-```
-
-10. Add a handler method to your component to upload a file to a private area for the signed in user. The sample method below shows how to download a sample PNG file of an AWS logo and upload it to the S3 bucket. Your application might get images from the camera roll on the phone (see the starter app code for examples of this).
-
-```javascript
-export default WithStorage(WithAuth(class App extends React.Component {
-  // ...
-
-  async handleUploadFile() {
-    const url = 'https://awsmedia.s3.amazonaws.com/AWS_Logo_PoweredBy_127px.png';
-    const [, fileName, extension] = /.*\/(.+)\.(\w+)$/.exec(url);
-
-    // Get cognito identity for the signed in user
-    const { IdentityId } = AWS.config.credentials.data;
-
-    // File will be uploaded to the user's private space in the S3 bucket
-    const key = `private/${IdentityId}/${fileName}`;
-
-    let objectUrl = null;
-
-    try {
-      // Download file from the internet.
-      const download = await RNFetchBlob.fetch('GET', url);
-      const { data } = download;
-      const { respInfo: { headers: { 'Content-Type': contentType } } } = download;
-
-      // Upload the file
-      const upload = await this.props.storage.putObject(key, new Buffer(data, 'base64'), contentType);
-
-      // Get url for stored object. This is an S3 presigned url. See: http://docs.aws.amazon.com/AmazonS3/latest/dev/ShareObjectPreSignedURL.html
-      objectUrl = this.props.storage.getObjectUrl(upload.key);
-
-      console.log(objectUrl);
-    } catch (err) {
-      console.warn(err);
-    }
-
-    this.setState({ objectUrl });
-  }
-
-  // ...
-}));
-```
-
-**Note**: The AWS Mobile Hub import process you ran at the begining created an S3 bucket with folders such as public and private. The code above creates a `key` variable for uploading to the private folder for this specific user Identitity. If you wish to make the data public you could use `const key = public/filename` as the upload location.
-
-11. Change your `render()` method to show a button to upload the file and the uploaded image
-```jsx
-  render() {
-    const { session } = this.props;
-
-    return (
-      session ?
-        (<View style={styles.container}>
-          {this.state.objectUrl && <Image source={{ uri: this.state.objectUrl }} style={{width: 200, height: 200, resizeMode: 'contain'}} />}
-          <Button title="Upload file" onPress={this.handleUploadFile.bind(this)} />
-          <Button title="Sign Out" onPress={() => this.props.doSignOut()} />
-        </View>)
-        :
-        (<View style={styles.container}>
-          <SignIn {...this.props} />
-          <SignUp {...this.props} />
-        </View>)
-    );
-  }
-```
-
-8. Test it!  
-`npm run ios # or android`
-
-9. You can now store objects in the Cloud on S3 from React Native using AWS IAM credentials. After you press the **Upload file** button go back into your Mobile Hub project and click the **Resources** button on the left of the console. Under the section that says **Amazon S3 Buckets** there should be one that has **userfiles** in the name. Click that and you'll see it has a folder labeled **private** which is organized by the user Identities. This will contain the images you've uploaded.
-
-
-
-## Modifying Express routes in Lambda <a name="lambdamodify"></a>
-
-The sample application invokes a Lambda function running [Express](https://expressjs.com) which will make CRUD operations to DynamoDB depending on the route which is passed from the client application. You may wish to modify this backend behavior for your own needs. The steps outline how you could add functionality to _"delete a Pet"_ by showing what modifications would be needed in the Lambda function and the corresponding client modifications to make the request.
-
-1. After you have cloned this repo, locate `./aws-mobile-react-native-starter/backend/lambdas/crud/app.js` and find the following section of code:
-
-```javascript
-app.listen(3000, function () {
-  console.log('App started');
-});
-```
-
-1. Immediately **Before** this code (_line_72_) add in the following code:
-
-```javascript
-app.delete('/items/pets/:petId', (req, res) => {
-  if (!req.params.petId) {
-    res.status(400).json({
-      message: 'You must specify a pet id',
-    }).end();
-    return;
-  }
-
-  const userId = req.apiGateway.event.requestContext.identity.cognitoIdentityId;
-
-  dynamoDb.delete({
-    TableName: PETS_TABLE_NAME,
-    Key: {
-      userId: userId,
-      petId: req.params.petId,
-    }
-  }, (err, data) => {
-    if (err) {
-      console.log(err)
-      res.status(500).json({
-        message: 'Could not delete pet'
-      }).end();
-    } else {
-      res.json(null);
-    }
-  });
-});
-```
-
-2. Save the file and in the Mobile Hub console for your project click the **Cloud Logic** card. Expand the **View resource details** section and note the name of the **Lambda function** in the list for the next step. It should be something similar to **Pets-itemsHandler-mobilehub-XXXXXXXXX**.
-
-3. In a terminal navigate to `./aws-mobile-react-native-starter/backend` and run:
+Sometimes you may need to reset or clear the React Native packager's cache. To do so, you can pass the `--reset-cache` flag to the start script:
 
 ```
-npm run build-lambdas
-aws lambda update-function-code --function-name FUNCTION_NAME --zip-file fileb://lambdas/crud-lambda.zip
+npm start -- --reset-cache
+# or
+yarn start -- --reset-cache
 ```
 
-**REPLACE the FUNCTION_NAME with your Lambda function name from the previous step.**
+#### `npm test`
 
-This might take a moment to complete based on your network connection. Please be patient.
+Runs the [jest](https://github.com/facebook/jest) test runner on your tests.
 
-Alternatively you could click the Lambda function resource in the Mobile Hub console which opens the Lambda console and press the **Upload** button on that page to upload the **lambdas/crud-lambda.zip** file.
+#### `npm run ios`
 
-5. Now that you've updated the Cloud Logic backend modify the client to call the new API route. In the `./aws-mobile-react-native-starter/client/src/Screens` directory edit `ViewPet.jsx`
+Like `npm start`, but also attempts to open your app in the iOS Simulator if you're on a Mac and have it installed.
 
-  - Add the following imports
-```javascript
-import { Button } from 'react-native-elements';
-import awsmobile from '../../aws-exports';
-import API from '../../lib/Categories/API';
+#### `npm run android`
+
+Like `npm start`, but also attempts to open your app on a connected Android device or emulator. Requires an installation of Android build tools (see [React Native docs](https://facebook.github.io/react-native/docs/getting-started.html) for detailed setup). We also recommend installing Genymotion as your Android emulator. Once you've finished setting up the native build environment, there are two options for making the right copy of `adb` available to Create React Native App:
+
+##### Using Android Studio's `adb`
+
+1. Make sure that you can run adb from your terminal.
+2. Open Genymotion and navigate to `Settings -> ADB`. Select “Use custom Android SDK tools” and update with your [Android SDK directory](https://stackoverflow.com/questions/25176594/android-sdk-location).
+
+##### Using Genymotion's `adb`
+
+1. Find Genymotion’s copy of adb. On macOS for example, this is normally `/Applications/Genymotion.app/Contents/MacOS/tools/`.
+2. Add the Genymotion tools directory to your path (instructions for [Mac](http://osxdaily.com/2014/08/14/add-new-path-to-path-command-line/), [Linux](http://www.computerhope.com/issues/ch001647.htm), and [Windows](https://www.howtogeek.com/118594/how-to-edit-your-system-path-for-easy-command-line-access/)).
+3. Make sure that you can run adb from your terminal.
+
+#### `npm run eject`
+
+This will start the process of "ejecting" from Create React Native App's build scripts. You'll be asked a couple of questions about how you'd like to build your project.
+
+**Warning:** Running eject is a permanent action (aside from whatever version control system you use). An ejected app will require you to have an [Xcode and/or Android Studio environment](https://facebook.github.io/react-native/docs/getting-started.html) set up.
+
+## Customizing App Display Name and Icon
+
+You can edit `app.json` to include [configuration keys](https://docs.expo.io/versions/latest/guides/configuration.html) under the `expo` key.
+
+To change your app's display name, set the `expo.name` key in `app.json` to an appropriate string.
+
+To set an app icon, set the `expo.icon` key in `app.json` to be either a local path or a URL. It's recommended that you use a 512x512 png file with transparency.
+
+## Writing and Running Tests
+
+This project is set up to use [jest](https://facebook.github.io/jest/) for tests. You can configure whatever testing strategy you like, but jest works out of the box. Create test files in directories called `__tests__` to have the files loaded by jest. See the [the template project](https://github.com/react-community/create-react-native-app/tree/master/react-native-scripts/template/__tests__) for an example test. The [jest documentation](https://facebook.github.io/jest/docs/getting-started.html) is also a wonderful resource, as is the [React Native testing tutorial](https://facebook.github.io/jest/docs/tutorial-react-native.html).
+
+## Environment Variables
+
+You can configure some of Create React Native App's behavior using environment variables.
+
+### Configuring Packager IP Address
+
+When starting your project, you'll see something like this for your project URL:
+
+```
+exp://192.168.0.2:19000
 ```
 
-  - Add the following function **BEFORE** the **render()** method:
-```javascript
-  async handleDeletePet(petId) {
-    const cloudLogicArray = JSON.parse(awsmobile.aws_cloud_logic_custom);
-    const endPoint = cloudLogicArray[0].endpoint;
-    const requestParams = {
-      method: 'DELETE',
-      url: `${endPoint}/items/pets/${petId}`,
-    }
+The "manifest" at that URL tells the Expo app how to retrieve and load your app's JavaScript bundle, so even if you load it in the app via a URL like `exp://localhost:19000`, the Expo client app will still try to retrieve your app at the IP address that the start script provides.
 
-    try {
-      await API.restRequest(requestParams);
+In some cases, this is less than ideal. This might be the case if you need to run your project inside of a virtual machine and you have to access the packager via a different IP address than the one which prints by default. In order to override the IP address or hostname that is detected by Create React Native App, you can specify your own hostname via the `REACT_NATIVE_PACKAGER_HOSTNAME` environment variable:
 
-      this.props.navigation.navigate('Home');
-    } catch (err) {
-      console.log(err);
-    }
-  }
-```
-
-  - In the `return` statement of the `render` method add in a new button after the `<View style={styles.breaker} />`:
-```javascript
-// ...
-      <View style={styles.breaker} />
-      <Button
-          fontFamily='lato'
-          backgroundColor={colors.red}
-          large
-          title="DELETE PET"
-          onPress={this.handleDeletePet.bind(this, pet.petId)} />
-// ...
-```
-6. Save the file and run the application again:
+Mac and Linux:
 
 ```
-cd ./aws-mobile-react-native-starter/client
-npm run ios # or android
+REACT_NATIVE_PACKAGER_HOSTNAME='my-custom-ip-address-or-hostname' npm start
 ```
 
-If you have previously uploaded any pets click on their thumbnail from the main page (if not upload one now). You should see a new button **DELETE PET**. Click on it and the pet should be removed from the screen. The record should also have been removed from the DynamoDB table. You can validate this by going to the **Resources** section of your Mobile Hub project and opening up the DynamoDB table.
+Windows:
+```
+set REACT_NATIVE_PACKAGER_HOSTNAME='my-custom-ip-address-or-hostname'
+npm start
+```
 
-## Security Information
+The above example would cause the development server to listen on `exp://my-custom-ip-address-or-hostname:19000`.
 
-### Remote Storage
+## Adding Flow
 
-This starter app uploads content to an S3 bucket. The S3 bucket is configured by Mobile Hub to use fine-grained access control to support public, protected and private access, you can find more information [here](http://docs.aws.amazon.com/mobile-hub/latest/developerguide/user-data-storage.html). To learn more about restricting this access further, see [Amazon S3 Security Considerations](http://docs.aws.amazon.com/mobile-hub/latest/developerguide/s3-security.html).
+Flow is a static type checker that helps you write code with fewer bugs. Check out this [introduction to using static types in JavaScript](https://medium.com/@preethikasireddy/why-use-static-types-in-javascript-part-1-8382da1e0adb) if you are new to this concept.
 
-### Local Storage
+React Native works with [Flow](http://flowtype.org/) out of the box, as long as your Flow version matches the one used in the version of React Native.
 
-This starter app uses React Native's [AsyncStorage](https://facebook.github.io/react-native/docs/asyncstorage.html) to persist user tokens locally (accessKeyId, secretAccessKey and sessionToken). You can take further actions to secure these tokens by encrypting them.
+To add a local dependency to the correct Flow version to a Create React Native App project, follow these steps:
 
-### API Handler Table Permissions
+1. Find the Flow `[version]` at the bottom of the included [.flowconfig](.flowconfig)
+2. Run `npm install --save-dev flow-bin@x.y.z` (or `yarn add --dev flow-bin@x.y.z`), where `x.y.z` is the .flowconfig version number.
+3. Add `"flow": "flow"` to the `scripts` section of your `package.json`.
+4. Add `// @flow` to any files you want to type check (for example, to `App.js`).
 
-The Lambda function in this starter will read and write to DynamoDB and it's role will be granted the appropriate permissions to perform such actions. If you wish to modify the sample to perform a more restricted set of actions see [Authentication and Access Control for Amazon DynamoDB](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/authentication-and-access-control.html).
+Now you can run `npm run flow` (or `yarn flow`) to check the files for type errors.
+You can optionally use a [plugin for your IDE or editor](https://flow.org/en/docs/editors/) for a better integrated experience.
+
+To learn more about Flow, check out [its documentation](https://flow.org/).
+
+## Sharing and Deployment
+
+Create React Native App does a lot of work to make app setup and development simple and straightforward, but it's very difficult to do the same for deploying to Apple's App Store or Google's Play Store without relying on a hosted service.
+
+### Publishing to Expo's React Native Community
+
+Expo provides free hosting for the JS-only apps created by CRNA, allowing you to share your app through the Expo client app. This requires registration for an Expo account.
+
+Install the `exp` command-line tool, and run the publish command:
+
+```
+$ npm i -g exp
+$ exp publish
+```
+
+### Building an Expo "standalone" app
+
+You can also use a service like [Expo's standalone builds](https://docs.expo.io/versions/latest/guides/building-standalone-apps.html) if you want to get an IPA/APK for distribution without having to build the native code yourself.
+
+### Ejecting from Create React Native App
+
+If you want to build and deploy your app yourself, you'll need to eject from CRNA and use Xcode and Android Studio.
+
+This is usually as simple as running `npm run eject` in your project, which will walk you through the process. Make sure to install `react-native-cli` and follow the [native code getting started guide for React Native](https://facebook.github.io/react-native/docs/getting-started.html).
+
+#### Should I Use ExpoKit?
+
+If you have made use of Expo APIs while working on your project, then those API calls will stop working if you eject to a regular React Native project. If you want to continue using those APIs, you can eject to "React Native + ExpoKit" which will still allow you to build your own native code and continue using the Expo APIs. See the [ejecting guide](https://github.com/react-community/create-react-native-app/blob/master/EJECTING.md) for more details about this option.
+
+## Troubleshooting
+
+### Networking
+
+If you're unable to load your app on your phone due to a network timeout or a refused connection, a good first step is to verify that your phone and computer are on the same network and that they can reach each other. Create React Native App needs access to ports 19000 and 19001 so ensure that your network and firewall settings allow access from your device to your computer on both of these ports.
+
+Try opening a web browser on your phone and opening the URL that the packager script prints, replacing `exp://` with `http://`. So, for example, if underneath the QR code in your terminal you see:
+
+```
+exp://192.168.0.1:19000
+```
+
+Try opening Safari or Chrome on your phone and loading
+
+```
+http://192.168.0.1:19000
+```
+
+and
+
+```
+http://192.168.0.1:19001
+```
+
+If this works, but you're still unable to load your app by scanning the QR code, please open an issue on the [Create React Native App repository](https://github.com/react-community/create-react-native-app) with details about these steps and any other error messages you may have received.
+
+If you're not able to load the `http` URL in your phone's web browser, try using the tethering/mobile hotspot feature on your phone (beware of data usage, though), connecting your computer to that WiFi network, and restarting the packager.
+
+### iOS Simulator won't open
+
+If you're on a Mac, there are a few errors that users sometimes see when attempting to `npm run ios`:
+
+* "non-zero exit code: 107"
+* "You may need to install Xcode" but it is already installed
+* and others
+
+There are a few steps you may want to take to troubleshoot these kinds of errors:
+
+1. Make sure Xcode is installed and open it to accept the license agreement if it prompts you. You can install it from the Mac App Store.
+2. Open Xcode's Preferences, the Locations tab, and make sure that the `Command Line Tools` menu option is set to something. Sometimes when the CLI tools are first installed by Homebrew this option is left blank, which can prevent Apple utilities from finding the simulator. Make sure to re-run `npm/yarn run ios` after doing so.
+3. If that doesn't work, open the Simulator, and under the app menu select `Reset Contents and Settings...`. After that has finished, quit the Simulator, and re-run `npm/yarn run ios`.
+
+### QR Code does not scan
+
+If you're not able to scan the QR code, make sure your phone's camera is focusing correctly, and also make sure that the contrast on the two colors in your terminal is high enough. For example, WebStorm's default themes may [not have enough contrast](https://github.com/react-community/create-react-native-app/issues/49) for terminal QR codes to be scannable with the system barcode scanners that the Expo app uses.
+
+If this causes problems for you, you may want to try changing your terminal's color theme to have more contrast, or running Create React Native App from a different terminal. You can also manually enter the URL printed by the packager script in the Expo app's search bar to load it manually.
