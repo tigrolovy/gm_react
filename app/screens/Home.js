@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import { ScrollView, Text, Linking, View } from "react-native";
 import { Card, Button } from "react-native-elements";
 
@@ -7,25 +7,25 @@ const images = [
     key: 1,
     name: "Nathan Anderson",
     image: require("../images/1.jpg"),
-    url: "https://unsplash.com/photos/C9t94JC4_L8"
+    url: "http://leonardsouza.com/react-audio-example.html"
   },
   {
     key: 2,
     name: "Jamison McAndie",
     image: require("../images/2.jpg"),
-    url: "https://unsplash.com/photos/waZEHLRP98s"
+    url: "http://leonardsouza.com/react-audio-example.html"
   },
   {
     key: 3,
     name: "Alberto Restifo",
     image: require("../images/3.jpg"),
-    url: "https://unsplash.com/photos/cFplR9ZGnAk"
+    url: "http://leonardsouza.com/react-audio-example.html"
   },
   {
     key: 4,
     name: "John Towner",
     image: require("../images/4.jpg"),
-    url: "https://unsplash.com/photos/89PFnHKg8HE"
+    url: "http://leonardsouza.com/react-audio-example.html"
   }
 ];
 
